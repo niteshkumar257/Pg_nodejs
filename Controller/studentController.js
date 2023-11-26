@@ -1,6 +1,6 @@
 import connection from "../Db/db.js";
 import { v4 as uuidv4 } from "uuid";
-
+import { uploadToCloudinary } from "../utils/uploadFile.js";
 const addStudent = (req, res) => {
   const { student_name, school_id, age } = req.body;
 
@@ -125,4 +125,39 @@ const updateStudent = async (req, res) => {
   }
 };
 
-export { addStudent, getStudentInfo, updateStudent };
+const updateStudentImage = async (req, res) => {
+  const { student_id } = req.params;
+  console.log(req.file);
+
+  try {
+    const { path } = req.file;
+
+    const student_image_url = await uploadToCloudinary({
+      localImagepath: path,
+    });
+
+    let queryText = "UPDATE student SET student_image=$1 WHERE student_id=$2";
+    let queryParmas = [student_image_url, student_id];
+
+    connection.query(queryText, queryParmas, (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: err,
+        });
+      } else {
+        return res.status(200).json({
+          success: true,
+          message: "Student image updated successfully",
+        });
+      }
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+export { addStudent, getStudentInfo, updateStudent, updateStudentImage };
