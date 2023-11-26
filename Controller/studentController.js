@@ -135,6 +135,11 @@ const updateStudentImage = async (req, res) => {
     const student_image_url = await uploadToCloudinary({
       localImagepath: path,
     });
+    if (!student_image_url)
+      return res.status(500).json({
+        success: false,
+        message: "image upload unsuccefull",
+      });
 
     let queryText = "UPDATE student SET student_image=$1 WHERE student_id=$2";
     let queryParmas = [student_image_url, student_id];
@@ -160,4 +165,15 @@ const updateStudentImage = async (req, res) => {
   }
 };
 
-export { addStudent, getStudentInfo, updateStudent, updateStudentImage };
+const uploadAnsSheet = (req, res) => {
+  const { student_id } = req.params;
+  console.log(req.files);
+};
+
+export {
+  addStudent,
+  getStudentInfo,
+  updateStudent,
+  updateStudentImage,
+  uploadAnsSheet,
+};

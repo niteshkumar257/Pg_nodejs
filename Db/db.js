@@ -4,11 +4,12 @@ const {Client}=pg;
 
 const connection =new Client({
   
-        user: 'postgres',
-        host: 'localhost',
-        database: 'Nitesh',
-        password: 'nitesh',
-        port: 5432, // Default PostgreSQL port
+        user: 'nitesh25',
+        host: 'nitesh-pg.postgres.database.azure.com',
+        database: 'postgres',
+        password: 'ASqwe12@#',
+        port: 5432, // Default PostgreSQL port,
+        ssl:true,
       
 })
 export default connection;

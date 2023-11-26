@@ -21,8 +21,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
-
-app.use('/api/v1',userRouter);
+app.get('/',(req,res)=>{
+   console.log("home route");
+})
+app.use('/api/v1/user',userRouter);
 app.use('/api/v1',studentRouter);
 // databae connected
 

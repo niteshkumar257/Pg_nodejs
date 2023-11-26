@@ -1,7 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
-import fs from "fs"
+import fs from "fs";
 import { resolve } from "path";
-
 
 cloudinary.config({
   cloud_name: "dqp4lzkkf",
@@ -13,18 +12,16 @@ const uploadToCloudinary = async ({ localImagepath }) => {
   if (!localImagepath) return null;
 
   try {
-   const response=await cloudinary.uploader.upload(localImagepath,{
-    resource_type:"auto"
-   })
-     console.log(response);
-     return response.secure_url;
-
+    const response = await cloudinary.uploader.upload(localImagepath, {
+      resource_type: "auto",
+    });
+  
+    return response.secure_url;
   } catch (err) {
-    // 
+    //
     fs.unlinkSync(localImagepath);
     console.log(err);
     return null;
-
   }
 };
 
